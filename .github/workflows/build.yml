@@ -3,7 +3,7 @@ name: Build Flutter APK & Release
 on:
   push:
     tags:
-      - 'v1.0.2' # Dispara o GitHub Actions automaticamente sempre que você criar uma tag (ex: v1.0.0)
+      - 'v*'
 
 jobs:
   build:
@@ -13,27 +13,27 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar o Java (Necessário para o Android)
+      - name: Configurar Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Configurar o Flutter
+      - name: Configurar Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.44.8' 
+          flutter-version: '3.x'
           channel: 'stable'
-          cache: true
 
-      - name: Instalar Dependências
+      - name: Instalar dependências
         run: flutter pub get
 
       - name: Compilar APK Release
         run: flutter build apk --release
 
-      - name: Criar Release no GitHub e Anexar o APK
-        uses: softprops/action-gh-release@v2
+      - name: Subir APK para o Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           files: build/app/outputs/flutter-apk/app-release.apk
         env:
