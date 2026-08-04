@@ -3,7 +3,7 @@ name: Build Flutter APK & Release
 on:
   push:
     tags:
-      - 'v*' # Dispara o GitHub Actions automaticamente sempre que você criar uma tag (ex: v1.0.0)
+      - 'v1.0.2' # Dispara o GitHub Actions automaticamente sempre que você criar uma tag (ex: v1.0.0)
 
 jobs:
   build:
